@@ -1,16 +1,20 @@
-
 public class LinkedList {
 	/*
 	 * Tester Code:
 	 */
 	public static void main(String[] args) {
 		LinkedList l = new LinkedList();
-		l.add('b');
-		l.add('c');
-		l.add('d');
-		l.remove(1);
-		l.print();
+		l.add('a',0);
+		l.add('b',1);
+		l.add('c',2);
+		System.out.println(l.get(0));
+		System.out.println(l.get(2));
+		System.out.println(l.remove(0));
+		System.out.println(l.get(0));
+		l.set(1, 'X');
+		System.out.println(l.get(1));
 	}
+
 
 	/*
 	 * Linked List Code: 
@@ -19,41 +23,59 @@ public class LinkedList {
 	int size;
 
 	public LinkedList() {
-		first = new Node('0');
-		size=1;
+		first = null;
+		size=0;
 	}
 
-	private Node get(int index, Node n) {
-		if(index==0) return n;
-		if(n.link==null) return null;
-		return get(index-1, n.link);
-	}
+	public void add(char c, int index) {
+		Node n = new Node();
+		n.value = c;
+		
+		if(index==0) {
+			n.link = first;
+			first = n;
+		}
+		else {
+		  Node p = get(index-1, first);
+			n.link = p.link;
+			p.link = n;
+		}
 
-	public char get(int index) {
-		return get(index+1,first).value;
-	}
-
-	public void set(char c, int index) {
-		get(index, first).value=c;
-	}
-
-	public void add(char c) {
-		get(size-1, first).link = new Node(c);
 		size++;
 	}
 
-	void add(char c, int index) {
-		Node p = get(index,first);
+	public char remove(int index) {
+		if(index==0) {
+			Node t = first;
+			first = t.link;
+			return t.value;
+		}
+		Node p = get(index-1, first);
 		Node t = p.link;
-		p.link = new Node(c);
-		p.link.link = t;
+		p.link = t.link;
+		return t.value;
 	}
 
-	char remove(int index) {
-		Node p = get(index, first);
-		Node t = p.link;
-		p.link = p.link.link;
-		return t.value;
+	public void set(int index, char c) {
+		get(index, first).value = c;
+	}
+
+	public char get(int index) {
+		return get(index, first).value;
+	}
+
+	public Node get(int index, Node n) {
+		//base case:
+		if(n==null) {
+			System.err.println("out of bounds, fool!");
+			return null;
+		}
+
+		if(index==0) {
+			return n;
+		}
+
+		return get(index-1, n.link);
 	}
 
 	/* 
@@ -78,10 +100,6 @@ public class LinkedList {
  * (you will need to do some work above, too)
  */
 class Node {
-	public Node(char c) {
-		value = c;
-	}
-
 	char value;
 	Node link;
 }
