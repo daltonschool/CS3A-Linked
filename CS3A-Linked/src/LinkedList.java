@@ -4,15 +4,7 @@ public class LinkedList {
 	 */
 	public static void main(String[] args) {
 		LinkedList l = new LinkedList();
-		l.add('a',0);
-		l.add('b',1);
-		l.add('c',2);
-		System.out.println(l.get(0));
-		System.out.println(l.get(2));
-		System.out.println(l.remove(0));
-		System.out.println(l.get(0));
-		l.set(1, 'X');
-		System.out.println(l.get(1));
+		//sure, you can put your own tests here.
 	}
 
 
@@ -27,18 +19,21 @@ public class LinkedList {
 		size=0;
 	}
 
+	/*
+	 * 2. modify add and remove to be doubly linked
+	 */
 	public void add(char c, int index) {
 		Node n = new Node();
 		n.value = c;
 		
 		if(index==0) {
-			n.link = first;
+			n.next = first;
 			first = n;
 		}
 		else {
 		  Node p = get(index-1, first);
-			n.link = p.link;
-			p.link = n;
+			n.next = p.next;
+			p.next = n;
 		}
 
 		size++;
@@ -47,12 +42,12 @@ public class LinkedList {
 	public char remove(int index) {
 		if(index==0) {
 			Node t = first;
-			first = t.link;
+			first = t.next;
 			return t.value;
 		}
 		Node p = get(index-1, first);
-		Node t = p.link;
-		p.link = t.link;
+		Node t = p.next;
+		p.next = t.next;
 		return t.value;
 	}
 
@@ -64,7 +59,7 @@ public class LinkedList {
 		return get(index, first).value;
 	}
 
-	public Node get(int index, Node n) {
+	protected Node get(int index, Node n) {
 		//base case:
 		if(n==null) {
 			System.err.println("out of bounds, fool!");
@@ -75,31 +70,38 @@ public class LinkedList {
 			return n;
 		}
 
-		return get(index-1, n.link);
+		return get(index-1, n.next);
 	}
 
 	/* 
-	 * 1. print the list.
+	 * 1. make a readable string of the list.
 	 * ex. "a > b > c > d"
+	 * hint: do it recursively!
 	 */
-	void print() {
-
+	public String toString() {
+		return "";
 	}
 
+	
 	/*
-	 * 3. sort the list
+	 * 3. Write the swap function
+	 * (you may swap the values, or as a bonus (+2) write swap the links)
 	 */
-	void bubblesort() {
+	public void swap(int i, int j) {
+		
+	}
+	
+	/*
+	 * 4. sort the list
+	 */
+	public void bubblesort() {
 
 	}
 
 }
 
-/*
- * 2. modify the node to be doubly linked
- * (you will need to do some work above, too)
- */
 class Node {
 	char value;
-	Node link;
+	Node next;
+	Node prev; //you'll need this for doubly linked
 }
