@@ -7,4 +7,4 @@ CS3A-Linked
 3.  Write the bubblesort function (7 points)
 4.  Write any other sort function (5 points)
 
-# Due 11/13
+# Due 11/26 with 2 weeks resubmission following
